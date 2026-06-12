@@ -1,0 +1,2 @@
+### Consulta de inventario
+GET http://wwwproyectosexto/inventarios

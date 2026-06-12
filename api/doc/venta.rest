@@ -1,0 +1,2 @@
+### Consulta de venta
+GET http://wwwproyectosexto/ventas
