@@ -9,10 +9,26 @@ class Productos
         return ConexionPDO::query($sql);
     }
 // Actualizar Producto
-
-    public static function update()
+    public static function update($id,$data)
     {
-        $sql="SELECT * FROM productos";
-        return ConexionPDO::query($sql);
+        if(isset($data{'id'})){
+        unset($data['id']);
+        }
+        $campos=[];
+        $valores=[];
+        // construir datos
+        foreach($data as $columna=>$valor)
+            {
+                $campos[]="$columna=:columna";
+                $valores[":$columna"]=$valor;
+                
+            }
+    $stringCampos=implode(",",$campos);
+    //preparamos la consulta
+    $sql="UPDATE productos SET $stringCampos WHERE id=:id";
+    $valores[':id']=$id;
+    //$result=ConexionPDO::();
+    //$sql="SELECT * FROM productos";
+        return $sql; //ConexionPDO::query($sql);
     }
 }

@@ -4,7 +4,6 @@ GET http://wwwproyectosexto/productos
 ### Modificar Productos
 PUT http://wwwproyectosexto/productos/1
 
-hearders:Content-Type: application/json
 {
    "id_producto":1,
    "nombre":"Leche Entera 1L",
