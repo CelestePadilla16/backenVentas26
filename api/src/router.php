@@ -24,7 +24,7 @@ class router{
                     {  array_shift($matches);
                         list($controllerName, $methodName) = explode('@', $route['handler']);
                         $controller = new $controllerName();
-                        return call_user_func_array([$controller, $methodName], $matches);
+                        return call_user_func_array([$controller,$methodName],$matches);
 
                     }
             }

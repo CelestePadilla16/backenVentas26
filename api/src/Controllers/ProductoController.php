@@ -1,6 +1,7 @@
 <?php
 require_once "../src/Models/Productos.php";
-class ProductoController{
+class ProductoController
+{
     public function getAll()
     {
         $producto=Productos::all();
@@ -8,7 +9,7 @@ class ProductoController{
          
     }
 //Actualizar producto
-public function update($id)
+public function update($id_producto)
     {
         $jsonData=file_get_contents('php://input');
         $data= json_decode($jsonData,true);
@@ -43,13 +44,13 @@ public function update($id)
        ]);
        return;
    }
-  // "precio_copra":"0,84",
-  if(!isset($data['precio_copra']) || trim($data['precio_copra'])=="")
+  // "precio_compra":"0,84",
+  if(!isset($data['precio_compra']) || trim($data['precio_compra'])=="")
    {
      echo json_encode(
        [
            "status"=>"Error",
-           "message"=>"El campo de precio_copra es obligatorio", 
+           "message"=>"El campo de precio_compra es obligatorio", 
        ]);
        return;
    }
@@ -82,17 +83,34 @@ public function update($id)
            "message"=>"El campo de estado es obligatorio", 
        ]);
        return;
-   }
-
-        $producto=Productos::update($id,$data);
+   }  
+    
+        $producto = Productos::update($id_producto, $data);
+        if($producto){
+            echo json_encode([
+                "estado" => true,
+                "message" => "Producto actualizado correctamente",
+            ]);
+            return;
+        }
         echo json_encode($producto);
          
     }
+
 //Adicionar producto
-//public function add()
-    //{
-        //$producto=Productos::update($id,$data);
-        //echo json_encode($producto);
-         
-    //}
+public function add()
+    {
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+         //validacion 
+        $producto = Productos::add($data);
+        if ($producto) {
+            echo json_encode([
+                "estado" => true,
+                "message" => "Producto adicionado correctamente",
+            ]);
+            return;
+        }
+    echo json_encode($producto);
+    }
 }

@@ -5,11 +5,21 @@ GET http://wwwproyectosexto/productos
 PUT http://wwwproyectosexto/productos/1
 
 {
-   "id_producto":1,
    "nombre":"Leche Entera 1L",
    "categoria":"Lacteos",
-   "precio_copra":"0,84",
-   "precio_venta":"1,20",
+   "precio_compra":"0.85",
+   "precio_venta":"1.20",
    "fecha_vencimiento":"2026-08-15",
+   "estado":"Disponible"
+}
+### Adicionar Producto 
+POST http://wwwproyectosexto/productos
+
+{
+   "nombre":"arina",
+   "categoria":"Abarrotes",
+   "precio_compra":"9.50",
+   "precio_venta":"10",
+   "fecha_vencimiento":"2027-10-26",
    "estado":"Disponible"
 }
