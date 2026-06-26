@@ -39,14 +39,31 @@ class Productos
             unset($data['id_producto']);
         }
 
+        $columnasPermitidas = [
+            'nombre',
+            'categoria',
+            'precio_compra',
+            'precio_venta',
+            'fecha_vencimiento',
+            'estado'
+        ];
+
         $columnas = [];
         $parametros = [];
         $valores = [];
 
         foreach ($data as $columna => $valor) {
+            if (!in_array($columna, $columnasPermitidas)) {
+                continue;
+            }
+
             $columnas[] = $columna;
             $parametros[] = ":$columna";
             $valores[":$columna"] = $valor;
+        }
+
+        if (count($columnas) == 0) {
+            return false;
         }
 
         $stringColumnas = implode(",", $columnas);
@@ -54,5 +71,16 @@ class Productos
         $sql = "INSERT INTO productos ($stringColumnas) VALUES ($stringParametros)";
 
         return ConexionPDO::execute($sql, $valores, true);
+    }
+
+    //Eliminar Producto
+    public static function delete($id_producto)
+    {
+        $sql = "DELETE FROM productos WHERE id_producto=:id_producto";
+        $valores = [
+            ":id_producto" => $id_producto
+        ];
+
+        return ConexionPDO::execute($sql, $valores, false);
     }
 }

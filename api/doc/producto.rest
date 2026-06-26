@@ -12,14 +12,42 @@ PUT http://wwwproyectosexto/productos/1
    "fecha_vencimiento":"2026-08-15",
    "estado":"Disponible"
 }
+
+### Modificar Producto con errores
+PUT http://wwwproyectosexto/productos/1
+
+{
+   "nombre":"",
+   "categoria":"",
+   "precio_compra":"abc",
+   "precio_venta":"-5",
+   "fecha_vencimiento":"15-08-2026",
+   "estado":"Mal"
+}
+
 ### Adicionar Producto 
 POST http://wwwproyectosexto/productos
 
 {
-   "nombre":"arina",
+   "nombre":"Arina",
    "categoria":"Abarrotes",
    "precio_compra":"9.50",
    "precio_venta":"10",
    "fecha_vencimiento":"2027-10-26",
    "estado":"Disponible"
 }
+
+### Adicionar Producto con errores
+POST http://wwwproyectosexto/productos
+
+{
+   "nombre":"",
+   "categoria":"",
+   "precio_compra":"0",
+   "precio_venta":"0",
+   "fecha_vencimiento":"2026",
+   "estado":""
+}
+
+### Eliminar Producto
+DELETE http://wwwproyectosexto/productos/12
