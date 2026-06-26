@@ -22,6 +22,7 @@ $route->add('GET','/','UserController@getAll');
 $route->add('GET','/productos','ProductoController@getAll');
 $route->add('POST','/productos','ProductoController@add');
 $route->add('PUT','/productos/{id}','ProductoController@update');
+$route->add('DELETE','/productos/{id}','ProductoController@delete');
 // direcion para empleado
 $route->add('GET','/empleados','EmpleadoController@getAll');
 // direccion para inventario
