@@ -1,0 +1,45 @@
+<section class="view-heading">
+    <div>
+        <p class="eyebrow">Ventas del dia</p>
+        <h1>Registrar venta</h1>
+        <p>Marca los productos vendidos. Al guardar, el sistema resta una unidad del stock y actualiza los ingresos.</p>
+    </div>
+</section>
+
+<section class="sales-dashboard">
+    <article class="stat-card">
+        <span>Ingresos</span>
+        <strong data-daily-income>Bs 0.00</strong>
+        <small>Acumulado de hoy</small>
+    </article>
+    <article class="stat-card">
+        <span>Ventas realizadas</span>
+        <strong data-sale-count>0</strong>
+        <small>Registros guardados</small>
+    </article>
+    <article class="stat-card">
+        <span>Meta diaria</span>
+        <strong data-income-percent>0%</strong>
+        <div class="progress-track"><span data-income-bar></span></div>
+    </article>
+</section>
+
+<section class="sales-layout">
+    <form class="sales-form" data-sales-form>
+        <h2>Productos vendidos</h2>
+        <div class="sale-products" data-sale-products></div>
+        <button class="primary-action" type="submit">Registrar venta</button>
+        <p class="sale-message" data-sale-message></p>
+    </form>
+
+    <aside class="sales-log">
+        <h2>Registro del dia</h2>
+        <div data-sales-log>
+            <article class="sale-log-item muted">
+                <span>--:--</span>
+                <strong>Sin ventas registradas</strong>
+                <em>Bs 0.00</em>
+            </article>
+        </div>
+    </aside>
+</section>

@@ -1,2 +1,2 @@
 ### Consulta de empleado
-GET http://wwwproyectosexto/empleados
+GET http://api.ventaabarrotes/

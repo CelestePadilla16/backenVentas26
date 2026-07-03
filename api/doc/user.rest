@@ -1,2 +1,2 @@
 ### Consulta de usuario
-GET http:/wwwproyectosexto.com/user
+GET http://api.ventaabarrotes/

@@ -1,8 +1,8 @@
 ### Consulta de producto
-GET http://wwwproyectosexto/productos
+GET http://api.ventaabarrotes/
 
 ### Modificar Productos
-PUT http://wwwproyectosexto/productos/1
+PUT http://api.ventaabarrotes/productos/1
 
 {
    "nombre":"Leche Entera 1L",
@@ -14,7 +14,7 @@ PUT http://wwwproyectosexto/productos/1
 }
 
 ### Modificar Producto con errores
-PUT http://wwwproyectosexto/productos/1
+PUT http://api.ventaabarrotes/productos/1
 
 {
    "nombre":"",
@@ -26,7 +26,7 @@ PUT http://wwwproyectosexto/productos/1
 }
 
 ### Adicionar Producto 
-POST http://wwwproyectosexto/productos
+POST http://api.ventaabarrotes/productos
 
 {
    "nombre":"Arina",
@@ -38,7 +38,7 @@ POST http://wwwproyectosexto/productos
 }
 
 ### Adicionar Producto con errores
-POST http://wwwproyectosexto/productos
+POST http://api.ventaabarrotes/productos
 
 {
    "nombre":"",
@@ -50,4 +50,4 @@ POST http://wwwproyectosexto/productos
 }
 
 ### Eliminar Producto
-DELETE http://wwwproyectosexto/productos/12
+DELETE http://api.ventaabarrotes/productos/12

@@ -1,2 +1,2 @@
 ### Consulta de inventario
-GET http://wwwproyectosexto/inventarios
+GET http://api.ventaabarrotes/

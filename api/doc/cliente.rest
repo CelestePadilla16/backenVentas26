@@ -1,2 +1,2 @@
 ### Consulta de cliente
-GET http://wwwproyectosexto/clientes
+GET http://api.ventaabarrotes/
