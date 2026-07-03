@@ -1,2 +1,2 @@
 ### Consulta de venta
-GET http://wwwproyectosexto/ventas
+GET http://api.ventaabarrotes/

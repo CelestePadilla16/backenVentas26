@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inventario de Abarrotes</title>
+    <link href="./src/styles/output.css" rel="stylesheet">
 </head>
 <body>
-    <h1>
-        Mi primara pagina
-        hola mod
-    </h1>
+    <header class="topbar">
+        <a class="brand" href="#" data-view="home" aria-label="Ir al inicio">
+            <span class="brand-mark">IA</span>
+            <span>
+                <strong>Inventario de Abarrotes</strong>
+                <small>Panel principal</small>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegacion principal">
+            <a class="nav-link active" href="#" data-view="home">Inicio</a>
+            <a class="nav-link" href="#" data-view="products">Comprar</a>
+            <a class="nav-link" href="#" data-view="inventory">Inventario</a>
+            <a class="nav-link" href="#" data-view="sales">Ventas</a>
+        </nav>
+
+        <div class="topbar-actions">
+            <span class="status-dot"></span>
+            <span>Sucursal central</span>
+        </div>
+    </header>
+
+    <main id="app" class="page-shell"></main>
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>
