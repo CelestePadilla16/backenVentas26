@@ -16,8 +16,9 @@ use App\Router;
 
 $route=new Router();
 // direccion para usuario
-$route->add('GET','/users','UserController@getAll');
 $route->add('GET','/','UserController@getAll');
+$route->add('GET','/users','UserController@getAll');
+// $route->add('GET','/','UserController@getAll');
 // direccion para producto
 $route->add('GET','/productos','ProductoController@getAll');
 $route->add('POST','/productos','ProductoController@add');
