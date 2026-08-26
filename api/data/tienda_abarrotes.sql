@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS tienda_abarrotes;
-CREATE DATABASE tienda_abarrotes;
-USE tienda_abarrotes;
+-- DROP DATABASE IF EXISTS tienda_abarrotes;
+-- CREATE DATABASE tienda_abarrotes;
+-- USE tienda_abarrotes;
 
 -- Tabla de usuarios
 CREATE TABLE usuarios (

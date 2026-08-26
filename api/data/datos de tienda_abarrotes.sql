@@ -1,5 +1,5 @@
 INSERT INTO usuarios (usuario, contraseña, rol) VALUES
-('juan_admin', '$2y$10$e0myZ4g3.MTRK7O...', 'Administrador'),
+('juanita_admin', '$2y$10$e0myZ4g3.MTRK7O...', 'Administrador'),
 ('maria_dev', '$2y$10$92IXUNpkjO0rO...', 'Empleado'),
 ('carlos_mgr', '$2y$10$L1kR8wV6qTYUo...', 'Administrador'),
 ('ana_sales', '$2y$10$vX5zN2b4pQWEm...', 'Empleado'),
@@ -10,6 +10,28 @@ INSERT INTO empleados (nombre, cargo, telefono, id_usuario) VALUES
 ('María López', 'Desarrolladora Senior', '555-0456', 2),
 ('Carlos Mendoza', 'Gerente de TI', '555-0789', 3),
 ('Ana Gómez', 'Ejecutiva de Ventas', '555-0111', 4),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ('Luis Torres', 'Soporte Técnico', '555-0222', 5);
 
 INSERT INTO clientes (nombre, telefono, direccion) VALUES
