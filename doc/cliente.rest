@@ -1,0 +1,11 @@
+### Consulta de cliente
+GET http://api.ventaabarrotes/clientes
+
+### Modificar Clientes
+PUT http://api.ventaabarrotes/clientes/1
+
+{
+   "nombre":"Alejandro Silva",
+   "telefono":"555-8765",
+   "direccion":"Av. Intercomunal, Res. El Parque, Apto 4B",
+}
