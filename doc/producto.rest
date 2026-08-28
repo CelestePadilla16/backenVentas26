@@ -1,0 +1,53 @@
+### Consulta de producto
+GET http://api.ventaabarrotes/
+
+### Modificar Productos
+PUT http://api.ventaabarrotes/productos/1
+
+{
+   "nombre":"Leche Entera 1L",
+   "categoria":"Lacteos",
+   "precio_compra":"0.85",
+   "precio_venta":"1.20",
+   "fecha_vencimiento":"2026-08-15",
+   "estado":"Disponible"
+}
+
+### Modificar Producto con errores
+PUT http://api.ventaabarrotes/productos/1
+
+{
+   "nombre":"",
+   "categoria":"",
+   "precio_compra":"abc",
+   "precio_venta":"-5",
+   "fecha_vencimiento":"15-08-2026",
+   "estado":"Mal"
+}
+
+### Adicionar Producto 
+POST http://api.ventaabarrotes/productos
+
+{
+   "nombre":"Arina",
+   "categoria":"Abarrotes",
+   "precio_compra":"9.50",
+   "precio_venta":"10",
+   "fecha_vencimiento":"2027-10-26",
+   "estado":"Disponible"
+}
+
+### Adicionar Producto con errores
+POST http://api.ventaabarrotes/productos
+
+{
+   "nombre":"",
+   "categoria":"",
+   "precio_compra":"0",
+   "precio_venta":"0",
+   "fecha_vencimiento":"2026",
+   "estado":""
+}
+
+### Eliminar Producto
+DELETE http://api.ventaabarrotes/productos/12
