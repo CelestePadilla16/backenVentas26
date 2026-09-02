@@ -1,4 +1,5 @@
 ## backenVentas26 en git 
-
-## registro usuario
+## Desarrollado por 
+## Celeste 
+## Registro de usuario
 -registro personal
