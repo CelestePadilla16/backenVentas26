@@ -1,2 +1,41 @@
 ### Consulta de usuario
 GET http://api.ventaabarrotes/users
+
+### Modificar usuario
+PUT http://api.ventaabarrotes/users/1
+
+{
+   "usuario":"juanita_admin",
+   "contraseña":"$2y$10$e0myZ4g3.MTRK7O...",
+   "rol":"Administrador"
+}
+
+### Modificar usuario con errores
+PUT http://api.ventaabarrotes/users/1
+
+{
+   "usuario":"",
+   "contraseña":"",
+   "rol":"Mal"
+}
+
+### Adicionar usuario
+POST http://api.ventaabarrotes/users
+
+{
+   "usuario":"maria_dev",
+   "contraseña":"$2y$10$92IXUNpkjO0rO...",
+   "rol":"Empleado"
+}
+
+### Adicionar usuario con errores
+POST http://api.ventaabarrotes/users
+
+{
+   "usuario":"",
+   "contraseña":"",
+   "rol":""
+}
+
+### Eliminar usuario
+DELETE http://api.ventaabarrotes/users/1

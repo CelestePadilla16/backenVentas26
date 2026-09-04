@@ -1,11 +1,41 @@
 ### Consulta de cliente
 GET http://api.ventaabarrotes/clientes
 
-### Modificar Clientes
+### Modificar cliente
 PUT http://api.ventaabarrotes/clientes/1
 
 {
    "nombre":"Alejandro Silva",
    "telefono":"555-8765",
-   "direccion":"Av. Intercomunal, Res. El Parque, Apto 4B",
+   "direccion":"Av. Intercomunal, Res. El Parque, Apto 4B"
 }
+
+### Modificar cliente con errores
+PUT http://api.ventaabarrotes/clientes/1
+
+{
+   "nombre":"",
+   "telefono":"",
+   "direccion":""
+}
+
+### Adicionar cliente
+POST http://api.ventaabarrotes/clientes
+
+{
+   "nombre":"Patricia Delgado",
+   "telefono":"555-2233",
+   "direccion":"Urbanizacion Las Mercedes, Calle Paris, Qta. Paty"
+}
+
+### Adicionar cliente con errores
+POST http://api.ventaabarrotes/clientes
+
+{
+   "nombre":"",
+   "telefono":"",
+   "direccion":""
+}
+
+### Eliminar cliente
+DELETE http://api.ventaabarrotes/clientes/1

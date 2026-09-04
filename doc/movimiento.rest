@@ -1,2 +1,49 @@
-### Consulta de inventario
-GET http://api.ventaabarrotes/
+### Consulta de movimiento
+GET http://api.ventaabarrotes/movimientos
+
+### Modificar movimiento
+PUT http://api.ventaabarrotes/movimientos/1
+
+{
+   "id_producto":"1",
+   "id_usuario":"2",
+   "tipo":"Entrada",
+   "cantidad":"50",
+   "fecha_movimiento":"2026-06-01"
+}
+
+### Modificar movimiento con errores
+PUT http://api.ventaabarrotes/movimientos/1
+
+{
+   "id_producto":"0",
+   "id_usuario":"abc",
+   "tipo":"Mal",
+   "cantidad":"-1",
+   "fecha_movimiento":"01-06-2026"
+}
+
+### Adicionar movimiento
+POST http://api.ventaabarrotes/movimientos
+
+{
+   "id_producto":"5",
+   "id_usuario":"5",
+   "tipo":"Salida",
+   "cantidad":"2",
+   "fecha_movimiento":"2026-06-12"
+}
+
+### Adicionar movimiento con errores
+POST http://api.ventaabarrotes/movimientos
+
+{
+   "id_producto":"",
+   "id_usuario":"",
+   "tipo":"",
+   "cantidad":"0",
+   "fecha_movimiento":"2026"
+}
+
+### Eliminar movimiento
+DELETE http://api.ventaabarrotes/movimientos/1

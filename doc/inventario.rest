@@ -1,2 +1,37 @@
 ### Consulta de inventario
-GET http://api.ventaabarrotes/
+GET http://api.ventaabarrotes/inventarios
+
+### Modificar inventario
+PUT http://api.ventaabarrotes/inventarios/1
+
+{
+   "id_producto":"1",
+   "cantidad":"50"
+}
+
+### Modificar inventario con errores
+PUT http://api.ventaabarrotes/inventarios/1
+
+{
+   "id_producto":"abc",
+   "cantidad":"-5"
+}
+
+### Adicionar inventario
+POST http://api.ventaabarrotes/inventarios
+
+{
+   "id_producto":"2",
+   "cantidad":"120"
+}
+
+### Adicionar inventario con errores
+POST http://api.ventaabarrotes/inventarios
+
+{
+   "id_producto":"0",
+   "cantidad":""
+}
+
+### Eliminar inventario
+DELETE http://api.ventaabarrotes/inventarios/1

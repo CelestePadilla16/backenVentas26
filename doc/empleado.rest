@@ -1,2 +1,45 @@
 ### Consulta de empleado
-GET http://api.ventaabarrotes/
+GET http://api.ventaabarrotes/empleados
+
+### Modificar empleado
+PUT http://api.ventaabarrotes/empleados/1
+
+{
+   "nombre":"Juan Perez",
+   "cargo":"Administrador de Sistemas",
+   "telefono":"555-0123",
+   "id_usuario":"1"
+}
+
+### Modificar empleado con errores
+PUT http://api.ventaabarrotes/empleados/1
+
+{
+   "nombre":"",
+   "cargo":"",
+   "telefono":"",
+   "id_usuario":"abc"
+}
+
+### Adicionar empleado
+POST http://api.ventaabarrotes/empleados
+
+{
+   "nombre":"Maria Lopez",
+   "cargo":"Desarrolladora Senior",
+   "telefono":"555-0456",
+   "id_usuario":"2"
+}
+
+### Adicionar empleado con errores
+POST http://api.ventaabarrotes/empleados
+
+{
+   "nombre":"",
+   "cargo":"",
+   "telefono":"",
+   "id_usuario":"0"
+}
+
+### Eliminar empleado
+DELETE http://api.ventaabarrotes/empleados/1

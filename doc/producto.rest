@@ -1,5 +1,5 @@
 ### Consulta de producto
-GET http://api.ventaabarrotes/
+GET http://api.ventaabarrotes/productos
 
 ### Modificar Productos
 PUT http://api.ventaabarrotes/productos/1
