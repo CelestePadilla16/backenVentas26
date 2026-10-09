@@ -21,11 +21,13 @@
             <a class="nav-link" href="#" data-view="products">Comprar</a>
             <a class="nav-link" href="#" data-view="inventory">Inventario</a>
             <a class="nav-link" href="#" data-view="sales">Ventas</a>
+            <a class="nav-link" href="#" data-view="user">Usuarios</a>
         </nav>
 
         <div class="topbar-actions">
             <span class="status-dot"></span>
-            <span>Sucursal central</span>
+            <span data-session-label>Sucursal central</span>
+            <button class="logout-button" type="button" data-logout>Cerrar sesion</button>
         </div>
     </header>
 
@@ -34,6 +36,7 @@
         <a class="side-link icon-[mdi-light--cart]" href="#" data-view="products" aria-label="Comprar"></a>
         <a class="side-link icon-[mdi-light--warehouse]" href="#" data-view="inventory" aria-label="Inventario"></a>
         <a class="side-link icon-[mdi-light--cash-register]" href="#" data-view="sales" aria-label="Ventas"></a>
+        <a class="side-link icon-[mdi-light--account]" href="#" data-view="user" aria-label="Usuarios"></a>
     </aside>
 
     <main id="app" class="page-shell"></main>

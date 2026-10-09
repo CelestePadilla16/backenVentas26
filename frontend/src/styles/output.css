@@ -114,6 +114,30 @@ a {
     white-space: nowrap;
 }
 
+.logout-button {
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-muted);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.is-auth .topbar,
+.is-auth .side-nav {
+    display: none;
+}
+
+.is-auth .page-shell {
+    width: min(980px, calc(100% - 2rem));
+    margin: 2rem auto;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
 .status-dot {
     width: 9px;
     height: 9px;
@@ -473,6 +497,42 @@ textarea {
     margin-bottom: 1rem;
 }
 
+.auth-layout,
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.auth-form {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.auth-form label {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.auth-form input,
+.auth-form select {
+    min-height: 44px;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+}
+
+.auth-message {
+    min-height: 1.2rem;
+    margin: 0;
+    color: var(--danger);
+    font-weight: 800;
+}
+
 .progress-track {
     height: 10px;
     overflow: hidden;
@@ -507,6 +567,16 @@ textarea {
 .sales-form {
     display: grid;
     gap: 1rem;
+}
+
+.sales-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.sales-actions button {
+    flex: 1 1 180px;
 }
 
 .sale-message {
@@ -682,6 +752,8 @@ td {
     }
 
     .hero-panel,
+    .auth-layout,
+    .admin-grid,
     .dashboard-grid,
     .catalog-layout,
     .form-layout,

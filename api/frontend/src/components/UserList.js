@@ -1,20 +1,25 @@
-import {api} from '../utils/api.js';
-
 export const getUserList = async () => {
     const container = document.getElementById('userTableList');
-    container.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
+    if (!container) return;
 
-    try {
-        const users = await api.get('/users');
-        container.innerHTML = users.map(user =>`
-            <tr> 
-                <td>${user.id}</td>
-                <td>${user.nombre ?? user.name ?? ''}</td>
-                <td>${user.email ?? user.apellido ?? ''}</td>
-                <td>${user.password ?? user.passwor ?? ''}</td>
-            </tr>
-        `).join('');
-    } catch (error) {
-        container.innerHTML = '<tr><td colspan="4">Error al cargar la lista de usuarios</td></tr>';
+    const users = JSON.parse(localStorage.getItem('abarrotesUsers') || '[]');
+    const sessionId = localStorage.getItem('abarrotesSession');
+    const currentUser = users.find(user => String(user.id) === String(sessionId));
+    const visibleUsers = currentUser?.role === 'admin'
+        ? users.filter(user => user.id === currentUser.id || user.adminCode === currentUser.adminCode)
+        : users.filter(user => user.id === currentUser?.id);
+
+    if (!visibleUsers.length) {
+        container.innerHTML = '<tr><td colspan="4">Sin usuarios registrados</td></tr>';
+        return;
     }
+
+    container.innerHTML = visibleUsers.map(user => `
+        <tr>
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.role === 'admin' ? 'Administrador' : 'Trabajador'}</td>
+            <td>${user.role === 'admin' ? user.adminCode : user.adminCode}</td>
+        </tr>
+    `).join('');
 };

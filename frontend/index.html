@@ -9,7 +9,13 @@
 <body>
     <header class="topbar">
         <a class="brand" href="#" data-view="home" aria-label="Ir al inicio">
-            <span class="brand-mark">IA</span>
+            <span class="brand-mark">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 8H6"></path>
+                    <circle cx="10" cy="21" r="1"></circle>
+                    <circle cx="18" cy="21" r="1"></circle>
+                </svg>
+            </span>
             <span>
                 <strong>Inventario de Abarrotes</strong>
                 <small>Panel principal</small>
@@ -21,11 +27,13 @@
             <a class="nav-link" href="#" data-view="products">Comprar</a>
             <a class="nav-link" href="#" data-view="inventory">Inventario</a>
             <a class="nav-link" href="#" data-view="sales">Ventas</a>
+            <a class="nav-link" href="#" data-view="user">Usuarios</a>
         </nav>
 
         <div class="topbar-actions">
             <span class="status-dot"></span>
-            <span>Sucursal central</span>
+            <span data-session-label>Sucursal central</span>
+            <button class="logout-button" type="button" data-logout>Cerrar sesion</button>
         </div>
     </header>
 
@@ -34,6 +42,7 @@
         <a class="side-link icon-[mdi-light--cart]" href="#" data-view="products" aria-label="Comprar"></a>
         <a class="side-link icon-[mdi-light--warehouse]" href="#" data-view="inventory" aria-label="Inventario"></a>
         <a class="side-link icon-[mdi-light--cash-register]" href="#" data-view="sales" aria-label="Ventas"></a>
+        <a class="side-link icon-[mdi-light--account]" href="#" data-view="user" aria-label="Usuarios"></a>
     </aside>
 
     <main id="app" class="page-shell"></main>

@@ -1,4 +1,5 @@
-<section class="work-panel">
+<section class="admin-grid">
+<article class="work-panel">
     <div class="panel-heading">
         <div>
             <p class="eyebrow">Administracion</p>
@@ -12,18 +13,43 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Password</th>
+                    <th>Rol</th>
+                    <th>Vinculo</th>
                 </tr>
             </thead>
             <tbody id="userTableList">
                 <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>john.doe@example.com</td>
-                    <td>jhon123</td>
+                    <td colspan="4">Sin usuarios registrados</td>
                 </tr>
             </tbody>
         </table>
     </div>
+</article>
+
+<article class="work-panel">
+    <div class="panel-heading">
+        <div>
+            <p class="eyebrow">Cierres de caja</p>
+            <h1>Registros de vendedores</h1>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Trabajador</th>
+                    <th>Ventas</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody data-admin-reports>
+                <tr>
+                    <td colspan="4">Sin cierres guardados</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</article>
 </section>
