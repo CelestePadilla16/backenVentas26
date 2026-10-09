@@ -1,0 +1,2 @@
+### Consulta de empleado
+GET http://api.ventaabarrotes/

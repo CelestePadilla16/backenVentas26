@@ -1,0 +1,52 @@
+<section class="view-heading">
+    <div>
+        <p class="eyebrow">Vender</p>
+        <h1>Publicar producto</h1>
+        <p>El vendedor puede registrar una foto, descripcion, precio y cantidad disponible del producto.</p>
+    </div>
+</section>
+
+<section class="form-layout">
+    <form class="product-form" data-product-form>
+        <label>
+            Nombre del producto
+            <input name="name" required placeholder="Ej: Harina integral">
+        </label>
+        <label>
+            Categoria
+            <input name="category" required placeholder="Ej: Basicos">
+        </label>
+        <label>
+            Precio en Bs
+            <input name="price" required min="0" step="0.10" type="number" placeholder="12.50">
+        </label>
+        <label>
+            Cantidad disponible
+            <input name="stock" required min="0" step="1" type="number" placeholder="20">
+        </label>
+        <label class="wide">
+            Descripcion del producto
+            <textarea name="description" required rows="4" placeholder="Detalle del producto que desea vender"></textarea>
+        </label>
+        <label class="wide file-picker">
+            Foto del producto
+            <input type="file" data-photo-input accept="image/*">
+            <img data-photo-preview alt="Vista previa del producto" hidden>
+        </label>
+        <button class="primary-action wide" type="submit">Publicar producto</button>
+    </form>
+
+    <aside class="published-panel">
+        <h2>Productos publicados</h2>
+        <div class="published-list" data-published-list>
+            <article class="published-item">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80" alt="Abarrotes variados">
+                <div>
+                    <strong>Producto nuevo</strong>
+                    <span>Listo para registrarse</span>
+                    <p>Los productos que publiques apareceran aqui con su precio y estado.</p>
+                </div>
+            </article>
+        </div>
+    </aside>
+</section>

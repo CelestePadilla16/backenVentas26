@@ -1,94 +1,83 @@
 <?php
 require_once "../src/Models/Clientes.php";
-class ClienteController{
+
+class ClienteController
+{
     public function getAll()
     {
-        $cliente=Clientes::all();
+        $cliente = Clientes::all();
         echo json_encode($cliente);
-         
     }
 
-//Actualizar producto
-public function update($id_producto)
+    //Actualizar cliente
+    public function update($id_cliente)
     {
-        $jsonData=file_get_contents('php://input');
-        $data= json_decode($jsonData,true);
-
-        if (json_last_error() != JSON_ERROR_NONE) {
-            http_response_code(400);
-            echo json_encode([
-                "estado" => false,
-                "errores" => [
-                    "json" => json_last_error_msg()
-                ],
-            ]);
+        $data = $this->getJsonData();
+        if ($data === null) {
             return;
         }
 
-        $errores = [];
-
-        if (!is_array($data)) {
-            $errores["datos"] = "Debe enviar un objeto JSON valido";
-        } else {
-            if (!isset($data['nombre']) || trim($data['nombre']) == "") {
-                $errores["nombre"] = "El campo nombre es obligatorio";
-            }
-
-            if (!isset($data['categoria']) || trim($data['categoria']) == "") {
-                $errores["categoria"] = "El campo categoria es obligatorio";
-            }
-
-            if (!isset($data['precio_compra']) || trim($data['precio_compra']) == "") {
-                $errores["precio_compra"] = "El campo precio_compra es obligatorio";
-            } elseif (!is_numeric($data['precio_compra']) || $data['precio_compra'] < 0) {
-                $errores["precio_compra"] = "El campo precio_compra debe ser numerico y mayor o igual a 0";
-            }
-
-            if (!isset($data['precio_venta']) || trim($data['precio_venta']) == "") {
-                $errores["precio_venta"] = "El campo precio_venta es obligatorio";
-            } elseif (!is_numeric($data['precio_venta']) || $data['precio_venta'] < 0) {
-                $errores["precio_venta"] = "El campo precio_venta debe ser numerico y mayor o igual a 0";
-            }
-
-            if (!isset($data['fecha_vencimiento']) || trim($data['fecha_vencimiento']) == "") {
-                $errores["fecha_vencimiento"] = "El campo fecha_vencimiento es obligatorio";
-            } else {
-                $fecha = DateTime::createFromFormat('Y-m-d', $data['fecha_vencimiento']);
-                if (!$fecha || $fecha->format('Y-m-d') !== $data['fecha_vencimiento']) {
-                    $errores["fecha_vencimiento"] = "El campo fecha_vencimiento debe tener formato YYYY-MM-DD";
-                }
-            }
-
-            if (!isset($data['estado']) || trim($data['estado']) == "") {
-                $errores["estado"] = "El campo estado es obligatorio";
-            } elseif (!in_array($data['estado'], ['Disponible', 'Agotado'])) {
-                $errores["estado"] = "El campo estado debe ser Disponible o Agotado";
-            }
-        }
-
+        $errores = $this->validar($data);
         if (count($errores) > 0) {
-            http_response_code(400);
-            echo json_encode([
-                "estado" => false,
-                "errores" => $errores,
-            ]);
+            $this->respuestaErrores($errores);
             return;
         }
-     
-        $producto = Productos::update($id_producto, $data);
-        if($producto){
+
+        $cliente = Clientes::update($id_cliente, $data);
+        if ($cliente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Producto actualizado correctamente",
+                "message" => "Cliente actualizado correctamente",
             ]);
             return;
         }
-        echo json_encode($producto);
-         
+        echo json_encode($cliente);
     }
 
-//Adicionar producto
-public function add()
+    //Adicionar cliente
+    public function add()
+    {
+        $data = $this->getJsonData();
+        if ($data === null) {
+            return;
+        }
+
+        $errores = $this->validar($data);
+        if (count($errores) > 0) {
+            $this->respuestaErrores($errores);
+            return;
+        }
+
+        $cliente = Clientes::add($data);
+        if ($cliente) {
+            echo json_encode([
+                "estado" => true,
+                "message" => "Cliente adicionado correctamente",
+                "id_cliente" => $cliente,
+            ]);
+            return;
+        }
+        echo json_encode($cliente);
+    }
+
+    //Eliminar cliente
+    public function delete($id_cliente)
+    {
+        $cliente = Clientes::delete($id_cliente);
+        if ($cliente) {
+            echo json_encode([
+                "estado" => true,
+                "message" => "Cliente eliminado correctamente",
+            ]);
+            return;
+        }
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo eliminar el cliente",
+        ]);
+    }
+
+    private function getJsonData()
     {
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
@@ -101,85 +90,48 @@ public function add()
                     "json" => json_last_error_msg()
                 ],
             ]);
-            return;
+            return null;
         }
-
-        $errores = [];
 
         if (!is_array($data)) {
-            $errores["datos"] = "Debe enviar un objeto JSON valido";
-        } else {
-            if (!isset($data['nombre']) || trim($data['nombre']) == "") {
-                $errores["nombre"] = "El campo nombre es obligatorio";
-            }
-
-            if (!isset($data['categoria']) || trim($data['categoria']) == "") {
-                $errores["categoria"] = "El campo categoria es obligatorio";
-            }
-
-            if (!isset($data['precio_compra']) || trim($data['precio_compra']) == "") {
-                $errores["precio_compra"] = "El campo precio_compra es obligatorio";
-            } elseif (!is_numeric($data['precio_compra']) || $data['precio_compra'] < 0) {
-                $errores["precio_compra"] = "El campo precio_compra debe ser numerico y mayor o igual a 0";
-            }
-
-            if (!isset($data['precio_venta']) || trim($data['precio_venta']) == "") {
-                $errores["precio_venta"] = "El campo precio_venta es obligatorio";
-            } elseif (!is_numeric($data['precio_venta']) || $data['precio_venta'] < 0) {
-                $errores["precio_venta"] = "El campo precio_venta debe ser numerico y mayor o igual a 0";
-            }
-
-            if (!isset($data['fecha_vencimiento']) || trim($data['fecha_vencimiento']) == "") {
-                $errores["fecha_vencimiento"] = "El campo fecha_vencimiento es obligatorio";
-            } else {
-                $fecha = DateTime::createFromFormat('Y-m-d', $data['fecha_vencimiento']);
-                if (!$fecha || $fecha->format('Y-m-d') !== $data['fecha_vencimiento']) {
-                    $errores["fecha_vencimiento"] = "El campo fecha_vencimiento debe tener formato YYYY-MM-DD";
-                }
-            }
-
-            if (!isset($data['estado']) || trim($data['estado']) == "") {
-                $errores["estado"] = "El campo estado es obligatorio";
-            } elseif (!in_array($data['estado'], ['Disponible', 'Agotado'])) {
-                $errores["estado"] = "El campo estado debe ser Disponible o Agotado";
-            }
-        }
-
-        if (count($errores) > 0) {
             http_response_code(400);
             echo json_encode([
                 "estado" => false,
-                "errores" => $errores,
+                "errores" => [
+                    "datos" => "Debe enviar un objeto JSON valido"
+                ],
             ]);
-            return;
+            return null;
         }
 
-         $producto = Productos::add($data);
-         if ($producto) {
-             echo json_encode([
-                 "estado" => true,
-                 "message" => "Producto adicionado correctamente",
-                 "id_producto" => $producto,
-             ]);
-             return;
-         }
-        echo json_encode($producto);
+        return $data;
     }
 
-//Eliminar producto
-public function delete($id_producto)
+    private function validar($data)
     {
-        $producto = Productos::delete($id_producto);
-        if ($producto) {
-            echo json_encode([
-                "estado" => true,
-                "message" => "Producto eliminado correctamente",
-            ]);
-            return;
+        $errores = [];
+
+        if (!isset($data['nombre']) || trim($data['nombre']) == "") {
+            $errores["nombre"] = "El campo nombre es obligatorio";
         }
+
+        if (!isset($data['telefono']) || trim($data['telefono']) == "") {
+            $errores["telefono"] = "El campo telefono es obligatorio";
+        }
+
+        if (!isset($data['direccion']) || trim($data['direccion']) == "") {
+            $errores["direccion"] = "El campo direccion es obligatorio";
+        }
+
+        return $errores;
+    }
+
+    private function respuestaErrores($errores)
+    {
+        http_response_code(400);
         echo json_encode([
             "estado" => false,
-            "message" => "No se pudo eliminar el producto",
+            "errores" => $errores,
         ]);
     }
 }

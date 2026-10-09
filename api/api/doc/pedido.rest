@@ -1,0 +1,2 @@
+### Consulta de pedido
+GET http://wwwproyectosexto/pedidos
