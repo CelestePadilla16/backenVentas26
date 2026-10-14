@@ -1,2 +1,0 @@
-### Consulta de usuario
-GET http://api.ventaabarrotes/users

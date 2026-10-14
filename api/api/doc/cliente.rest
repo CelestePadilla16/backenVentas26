@@ -1,2 +1,0 @@
-### Consulta de cliente
-GET http://api.ventaabarrotes/

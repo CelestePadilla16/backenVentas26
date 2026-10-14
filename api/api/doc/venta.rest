@@ -1,2 +1,0 @@
-### Consulta de venta
-GET http://api.ventaabarrotes/

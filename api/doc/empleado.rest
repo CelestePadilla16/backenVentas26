@@ -1,5 +1,5 @@
 ### Consulta de empleado
-GET http://api.ventaabarrotes/empleados
+GET http://api.abarrotes/empleados
 
 ### Modificar empleado
 PUT http://api.ventaabarrotes/empleados/1

@@ -27,11 +27,11 @@ $route->add('GET','/productos','ProductoController@getAll');
 $route->add('POST','/productos','ProductoController@add');
 $route->add('PUT','/productos/{id}','ProductoController@update');
 $route->add('DELETE','/productos/{id}','ProductoController@delete');
-// direcion para empleado
-$route->add('GET','/empleados','EmpleadoController@getAll');
-$route->add('POST','/empleados','EmpleadoController@add');
-$route->add('PUT','/empleados/{id}','EmpleadoController@update');
-$route->add('DELETE','/empleados/{id}','EmpleadoController@delete');
+// Dirección para empleado
+// $route->add('GET', '/empleados', 'EmpleadoController@getAll');
+// $route->add('POST', '/empleados', 'EmpleadoController@add');
+// $route->add('PUT', '/empleados/{id}', 'EmpleadoController@update');
+// $route->add('DELETE', '/empleados/{id}', 'EmpleadoController@delete');
 // direccion para inventario
 $route->add('GET','/inventarios','InventarioController@getAll'); 
 $route->add('POST','/inventarios','InventarioController@add'); 
