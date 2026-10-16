@@ -1,5 +1,5 @@
 ### Consulta de usuario
-GET http://api.abarrotes/users
+GET http://api.ventaabarrotes/users
 
 ### Modificar usuario
 PUT http://api.ventaabarrotes/users/1
