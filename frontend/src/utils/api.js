@@ -1,4 +1,4 @@
-const API_URL = "http://api.ventaabarrotes/";
+const API_URL = "http://api.abarrotes/";
 
 export const api = {
     // Función para obtener datos del API
