@@ -1,2 +1,53 @@
 ### Consulta de venta
-GET http://api.ventaabarrotes/
+GET http://api.ventaabarrotes/ventas
+
+### Modificar venta
+PUT http://api.ventaabarrotes/ventas/1
+
+{
+   "id_cliente":"1",
+   "id_producto":"1",
+   "id_empleado":"4",
+   "cantidad":"5",
+   "total":"6.00",
+   "fecha_venta":"2026-06-05"
+}
+
+### Modificar venta con errores
+PUT http://api.ventaabarrotes/ventas/1
+
+{
+   "id_cliente":"abc",
+   "id_producto":"0",
+   "id_empleado":"",
+   "cantidad":"-5",
+   "total":"abc",
+   "fecha_venta":"05-06-2026"
+}
+
+### Adicionar venta
+POST http://api.ventaabarrotes/ventas
+
+{
+   "id_cliente":"3",
+   "id_producto":"2",
+   "id_empleado":"4",
+   "cantidad":"20",
+   "total":"35.00",
+   "fecha_venta":"2026-06-06"
+}
+
+### Adicionar venta con errores
+POST http://api.ventaabarrotes/ventas
+
+{
+   "id_cliente":"",
+   "id_producto":"",
+   "id_empleado":"",
+   "cantidad":"0",
+   "total":"-1",
+   "fecha_venta":"2026"
+}
+
+### Eliminar venta
+DELETE http://api.ventaabarrotes/ventas/1
