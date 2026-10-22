@@ -5,6 +5,20 @@ const money = new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB
 const USERS_KEY = 'abarrotesUsers';
 const SESSION_KEY = 'abarrotesSession';
 const REPORTS_KEY = 'ventasGuardadas';
+const LOGIN_RESET_FLAG = 'abarrotesLoginReset';
+
+function clearStoredLoginData() {
+    localStorage.removeItem(USERS_KEY);
+    localStorage.removeItem(SESSION_KEY);
+}
+
+function resetLoginDataOnce() {
+    if (localStorage.getItem(LOGIN_RESET_FLAG) === 'done') return;
+    clearStoredLoginData();
+    localStorage.setItem(LOGIN_RESET_FLAG, 'done');
+}
+
+resetLoginDataOnce();
 
 let currentUser = getCurrentUser();
 
@@ -132,70 +146,112 @@ function updateShell() {
 function renderAuthView() {
     updateShell();
     app.innerHTML = `
-        <section class="hero-panel">
-            <div>
-                <p class="eyebrow">Acceso al sistema</p>
-                <h1>Inventario de Abarrotes</h1>
-                <p class="hero-copy">Crea una cuenta como administrador o trabajador. El trabajador debe usar el codigo del administrador para quedar vinculado.</p>
-            </div>
-            <div class="hero-card">
-                <span>Roles</span>
-                <strong>Admin / Trabajador</strong>
-                <small>Permisos separados</small>
-            </div>
-        </section>
+        <div class="auth-shell">
+            <section class="auth-hero">
+                <span class="auth-orb auth-orb-a"></span>
+                <span class="auth-orb auth-orb-b"></span>
+                <span class="auth-orb auth-orb-c"></span>
 
-        <section class="auth-layout">
-            <article class="work-panel">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow">Registro</p>
-                        <h2>Crear cuenta</h2>
+                <div class="auth-hero-body">
+                    <span class="auth-badge">Acceso al sistema</span>
+                    <h1>Inventario de <em>Abarrotes</em></h1>
+                    <p class="auth-hero-copy">Administra tus productos, controla el inventario y registra las ventas del dia desde un solo lugar.</p>
+
+                    <ul class="auth-features">
+                        <li>Control de productos y stock en tiempo real</li>
+                        <li>Registro de ventas por trabajador</li>
+                        <li>Reportes y cierres por administrador</li>
+                    </ul>
+
+                    <div class="auth-roles">
+                        <span class="auth-role-pill">
+                            <strong>Administrador</strong>
+                            <small>Control total</small>
+                        </span>
+                        <span class="auth-role-pill">
+                            <strong>Trabajador</strong>
+                            <small>Solo ventas</small>
+                        </span>
                     </div>
                 </div>
-                <form class="auth-form" data-register-form>
-                    <label>Nombre
-                        <input name="name" type="text" required>
-                    </label>
-                    <label>Email
-                        <input name="email" type="email" required>
-                    </label>
-                    <label>Contrasena
-                        <input name="password" type="password" required minlength="4">
-                    </label>
-                    <label>Tipo de cuenta
-                        <select name="role" data-role-select>
-                            <option value="admin">Administrador</option>
-                            <option value="trabajador">Trabajador</option>
-                        </select>
-                    </label>
-                    <label data-admin-code-field>Codigo del administrador
-                        <input name="adminCode" type="text" placeholder="Ej: JUAN-1234">
-                    </label>
-                    <button class="primary-action" type="submit">Registrarse</button>
-                    <p class="auth-message" data-register-message></p>
-                </form>
-            </article>
+            </section>
 
-            <article class="work-panel">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow">Ingreso</p>
-                        <h2>Iniciar sesion</h2>
-                    </div>
-                </div>
-                <form class="auth-form" data-login-form>
-                    <label>Email
-                        <input name="email" type="email" required>
-                    </label>
-                    <label>Contrasena
-                        <input name="password" type="password" required>
-                    </label>
-                    <button class="secondary-action" type="submit">Entrar</button>
-                    <p class="auth-message" data-login-message></p>
-                </form>
-            </article>
-        </section>
+            <section class="auth-card">
+                <article class="auth-panel" data-login-panel>
+                    <header class="auth-panel-head">
+                        <span class="auth-panel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="eyebrow">Ingreso</p>
+                            <h2>Iniciar sesion</h2>
+                        </div>
+                    </header>
+                    <p class="auth-panel-sub">Ingresa con tu correo y contrasena para continuar.</p>
+                    <form class="auth-form" data-login-form>
+                        <label>Email
+                            <input name="email" type="email" required>
+                        </label>
+                        <label>Contrasena
+                            <input name="password" type="password" required>
+                        </label>
+                        <button class="secondary-action" type="submit">Entrar</button>
+                        <p class="auth-message" data-login-message></p>
+                    </form>
+                    <p class="auth-switch">
+                        Aun no tienes cuenta?
+                        <button type="button" data-show-register>Registrate</button>
+                    </p>
+                </article>
+
+                <article class="auth-panel is-hidden" data-register-panel>
+                    <header class="auth-panel-head">
+                        <span class="auth-panel-icon">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M19 8v6"></path>
+                                <path d="M22 11h-6"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="eyebrow">Registro</p>
+                            <h2>Crear cuenta</h2>
+                        </div>
+                    </header>
+                    <p class="auth-panel-sub">Completa tus datos y elige el tipo de cuenta.</p>
+                    <form class="auth-form" data-register-form>
+                        <label>Nombre
+                            <input name="name" type="text" required>
+                        </label>
+                        <label>Email
+                            <input name="email" type="email" required>
+                        </label>
+                        <label>Contrasena
+                            <input name="password" type="password" required minlength="4">
+                        </label>
+                        <label>Tipo de cuenta
+                            <select name="role" data-role-select>
+                                <option value="admin">Administrador</option>
+                                <option value="trabajador">Trabajador</option>
+                            </select>
+                        </label>
+                        <label data-admin-code-field>Codigo del administrador
+                            <input name="adminCode" type="text" placeholder="Ej: JUAN-1234">
+                        </label>
+                        <button class="primary-action" type="submit">Registrarse</button>
+                        <p class="auth-message" data-register-message></p>
+                    </form>
+                    <p class="auth-switch">
+                        Ya tienes cuenta?
+                        <button type="button" data-show-login>Inicia sesion</button>
+                    </p>
+                </article>
+            </section>
+        </div>
     `;
 
     initAuthView();
@@ -204,6 +260,10 @@ function renderAuthView() {
 function initAuthView() {
     const registerForm = document.querySelector('[data-register-form]');
     const loginForm = document.querySelector('[data-login-form]');
+    const loginPanel = document.querySelector('[data-login-panel]');
+    const registerPanel = document.querySelector('[data-register-panel]');
+    const showRegisterButton = document.querySelector('[data-show-register]');
+    const showLoginButton = document.querySelector('[data-show-login]');
     const roleSelect = document.querySelector('[data-role-select]');
     const adminCodeField = document.querySelector('[data-admin-code-field]');
     const registerMessage = document.querySelector('[data-register-message]');
@@ -215,6 +275,16 @@ function initAuthView() {
 
     roleSelect.addEventListener('change', toggleAdminCode);
     toggleAdminCode();
+
+    showRegisterButton.addEventListener('click', () => {
+        loginPanel.classList.add('is-hidden');
+        registerPanel.classList.remove('is-hidden');
+    });
+
+    showLoginButton.addEventListener('click', () => {
+        registerPanel.classList.add('is-hidden');
+        loginPanel.classList.remove('is-hidden');
+    });
 
     registerForm.addEventListener('submit', async event => {
         event.preventDefault();
@@ -301,9 +371,52 @@ function renderProductCards(list = products) {
     `).join('');
 }
 
+function productCreateForm() {
+    return `
+        <form class="product-create is-hidden" data-product-create>
+            <p class="eyebrow">Nuevo producto</p>
+            <label>Nombre
+                <input name="name" type="text" required>
+            </label>
+            <label>Categoria
+                <input name="category" type="text" required>
+            </label>
+            <label>Precio
+                <input name="price" type="number" step="0.01" min="0" required>
+            </label>
+            <label>Stock
+                <input name="stock" type="number" min="0" required>
+            </label>
+            <label>Descripcion
+                <input name="description" type="text" required>
+            </label>
+            <label>Imagen (URL)
+                <input name="image" type="url" placeholder="Opcional">
+            </label>
+            <button class="primary-action" type="submit">Guardar producto</button>
+            <p class="auth-message" data-create-message></p>
+        </form>
+    `;
+}
+
 function showProductDetail(product) {
     const detail = document.querySelector('[data-product-detail]');
-    if (!detail || !product) return;
+    if (!detail) return;
+
+    if (!product) {
+        detail.innerHTML = `
+            <div>
+                <p class="eyebrow">Catalogo</p>
+                <h2>Sin productos</h2>
+                <p>No hay productos en el catalogo. Crea uno nuevo para empezar.</p>
+                <div class="product-actions">
+                    <button class="primary-action" type="button" data-add-product>Agregar producto</button>
+                </div>
+                ${productCreateForm()}
+            </div>
+        `;
+        return;
+    }
 
     detail.innerHTML = `
         <img src="${product.image}" alt="${product.name}">
@@ -315,6 +428,11 @@ function showProductDetail(product) {
                 <strong>${money.format(product.price)}</strong>
                 <span class="${product.stock === 0 ? 'text-danger' : 'text-ok'}">${statusLabel(product.stock)}</span>
             </div>
+            <div class="product-actions">
+                <button class="primary-action" type="button" data-add-product>Agregar producto</button>
+                <button class="danger-action" type="button" data-delete-id="${product.id}">Eliminar producto</button>
+            </div>
+            ${productCreateForm()}
         </div>
     `;
 }
@@ -323,7 +441,10 @@ function initProductsView() {
     renderProductCards();
     showProductDetail(products[0]);
 
-    document.querySelector('[data-product-search]')?.addEventListener('input', event => {
+    const detail = document.querySelector('[data-product-detail]');
+    const search = document.querySelector('[data-product-search]');
+
+    search?.addEventListener('input', event => {
         const query = event.target.value.trim().toLowerCase();
         const filtered = products.filter(product =>
             product.name.toLowerCase().includes(query) ||
@@ -332,6 +453,45 @@ function initProductsView() {
         );
         renderProductCards(filtered);
         showProductDetail(filtered[0]);
+    });
+
+    detail?.addEventListener('click', event => {
+        if (event.target.closest('[data-add-product]')) {
+            detail.querySelector('[data-product-create]')?.classList.toggle('is-hidden');
+            return;
+        }
+
+        const deleteButton = event.target.closest('[data-delete-id]');
+        if (deleteButton) {
+            const id = Number(deleteButton.dataset.deleteId);
+            const index = products.findIndex(product => product.id === id);
+            if (index === -1) return;
+            if (!confirm(`Eliminar "${products[index].name}" del catalogo?`)) return;
+            products.splice(index, 1);
+            renderProductCards();
+            showProductDetail(products[0]);
+        }
+    });
+
+    detail?.addEventListener('submit', event => {
+        if (!event.target.matches('[data-product-create]')) return;
+        event.preventDefault();
+        const data = new FormData(event.target);
+        const product = {
+            id: Date.now(),
+            name: data.get('name').toString().trim(),
+            category: data.get('category').toString().trim(),
+            price: Number(data.get('price')),
+            stock: Number(data.get('stock')),
+            image: data.get('image').toString().trim() || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80',
+            description: data.get('description').toString().trim(),
+        };
+        products.unshift(product);
+        renderProductCards();
+        showProductDetail(product);
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.classList.toggle('active', Number(card.dataset.productId) === product.id);
+        });
     });
 }
 
