@@ -1,6 +1,9 @@
 <?php
-//$path = dirname(__DIR__, 2) . '/.env';
-//$config = parse_ini_file($path);
+$path = dirname(__DIR__, 2) . '/.env';
+$config = parse_ini_file($path);
+if ($config === false) {
+    die("No se pudo cargar el archivo .env en: " . $path);
+}
 define("HOST",$config['DB_HOST']);
 define("DATABASE",$config['DB_NAME']);
 define("USERNAME",$config['DB_USER']);

@@ -7,15 +7,15 @@ if($_SERVER['REQUEST_METHOD']=='OPTIONS')
     {
         exit;
     }
-require_once "../src/Router.php";
-require_once "../src/Controllers/UserController.php";
-require_once "../src/Controllers/ProductoController.php";
-require_once "../src/Controllers/EmpleadoController.php";
-require_once "../src/Controllers/InventarioController.php";
-require_once "../src/Controllers/PedidoController.php";
-require_once "../src/Controllers/ClienteController.php";
-require_once "../src/Controllers/MovimientoController.php";
-require_once "../src/Controllers/VentaController.php";
+require_once __DIR__ . "/../src/Router.php";
+require_once __DIR__ . "/../src/Controllers/UserController.php";
+require_once __DIR__ . "/../src/Controllers/ProductoController.php";
+require_once __DIR__ . "/../src/Controllers/EmpleadoController.php";
+require_once __DIR__ . "/../src/Controllers/InventarioController.php";
+require_once __DIR__ . "/../src/Controllers/PedidoController.php";
+require_once __DIR__ . "/../src/Controllers/ClienteController.php";
+require_once __DIR__ . "/../src/Controllers/MovimientoController.php";
+require_once __DIR__ . "/../src/Controllers/VentaController.php";
 use App\Router;
 
 $route=new Router();

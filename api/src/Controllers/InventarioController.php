@@ -1,5 +1,5 @@
 <?php
-require_once "../src/Models/Inventarios.php";
+require_once __DIR__ . "/../Models/Inventarios.php";
 
 class InventarioController
 {

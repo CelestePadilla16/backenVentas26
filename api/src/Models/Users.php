@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . "/../config/conexionDB.php";
+include_once __DIR__ . "/../Config/conexionDB.php";
 
 class Users
 {
