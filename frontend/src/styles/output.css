@@ -260,6 +260,12 @@ h2 {
     color: var(--muted);
 }
 
+.heading-actions {
+    display: grid;
+    gap: 0.6rem;
+    min-width: min(100%, 320px);
+}
+
 .search-box {
     display: grid;
     gap: 0.45rem;

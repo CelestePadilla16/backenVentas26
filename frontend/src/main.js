@@ -5,6 +5,9 @@ const money = new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB
 const USERS_KEY = 'abarrotesUsers';
 const SESSION_KEY = 'abarrotesSession';
 const REPORTS_KEY = 'ventasGuardadas';
+const PRODUCTS_KEY = 'abarrotesProducts';
+const SALES_KEY = 'abarrotesSales';
+const ACTIVITY_KEY = 'abarrotesActivity';
 const LOGIN_RESET_FLAG = 'abarrotesLoginReset';
 
 function clearStoredLoginData() {
@@ -22,7 +25,7 @@ resetLoginDataOnce();
 
 let currentUser = getCurrentUser();
 
-const products = [
+const defaultProducts = [
     {
         id: 1,
         name: 'Arroz blanco',
@@ -79,6 +82,12 @@ const products = [
     },
 ];
 
+const products = readStorage(PRODUCTS_KEY, defaultProducts);
+
+if (!localStorage.getItem(PRODUCTS_KEY)) {
+    writeStorage(PRODUCTS_KEY, products);
+}
+
 const sales = [];
 
 function readStorage(key, fallback = []) {
@@ -87,6 +96,41 @@ function readStorage(key, fallback = []) {
 
 function writeStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
+}
+
+function saveProducts() {
+    writeStorage(PRODUCTS_KEY, products);
+}
+
+function logActivity(tipo, detalle, extra = {}) {
+    const activity = readStorage(ACTIVITY_KEY);
+    activity.push({
+        id: Date.now() + Math.random(),
+        fecha: new Date().toLocaleString('es-BO'),
+        tipo,
+        detalle,
+        usuario: currentUser?.name || 'Sin usuario',
+        usuarioId: currentUser?.id || null,
+        rol: currentUser?.role || null,
+        adminCode: currentUser?.adminCode || null,
+        ...extra,
+    });
+    writeStorage(ACTIVITY_KEY, activity);
+}
+
+function saveSale(soldProducts, total, time) {
+    const history = readStorage(SALES_KEY);
+    history.push({
+        id: time.getTime(),
+        fecha: time.toISOString().slice(0, 10),
+        hora: time.toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' }),
+        trabajador: currentUser?.name || 'Sin usuario',
+        trabajadorId: currentUser?.id || null,
+        adminCode: currentUser?.adminCode || null,
+        productos: soldProducts.map(product => ({ id: product.id, nombre: product.name, precio: product.price })),
+        total,
+    });
+    writeStorage(SALES_KEY, history);
 }
 
 function createAdminCode(name) {
@@ -429,7 +473,7 @@ function showProductDetail(product) {
                 <span class="${product.stock === 0 ? 'text-danger' : 'text-ok'}">${statusLabel(product.stock)}</span>
             </div>
             <div class="product-actions">
-                <button class="primary-action" type="button" data-add-product>Agregar producto</button>
+                <button class="primary-action" type="button" data-add-product="${product.id}">Agregar producto</button>
                 <button class="danger-action" type="button" data-delete-id="${product.id}">Eliminar producto</button>
             </div>
             ${productCreateForm()}
@@ -443,6 +487,13 @@ function initProductsView() {
 
     const detail = document.querySelector('[data-product-detail]');
     const search = document.querySelector('[data-product-search]');
+    const saveButton = document.querySelector('[data-save-products]');
+    const productsMessage = document.querySelector('[data-products-message]');
+
+    saveButton?.addEventListener('click', () => {
+        saveProducts();
+        showSalesMessage(productsMessage, 'Cambios guardados correctamente.');
+    });
 
     search?.addEventListener('input', event => {
         const query = event.target.value.trim().toLowerCase();
@@ -456,8 +507,33 @@ function initProductsView() {
     });
 
     detail?.addEventListener('click', event => {
-        if (event.target.closest('[data-add-product]')) {
-            detail.querySelector('[data-product-create]')?.classList.toggle('is-hidden');
+        const addButton = event.target.closest('[data-add-product]');
+        if (addButton) {
+            const productId = addButton.dataset.addProduct;
+            if (!productId) {
+                detail.querySelector('[data-product-create]')?.classList.toggle('is-hidden');
+                return;
+            }
+
+            const product = products.find(item => item.id === Number(productId));
+            if (!product) return;
+
+            product.stock += 1;
+            saveProducts();
+            logActivity('Aumento de cantidad', `${product.name}: ${product.stock} unidades`);
+            const query = search?.value.trim().toLowerCase() || '';
+            const filtered = query
+                ? products.filter(item =>
+                    item.name.toLowerCase().includes(query) ||
+                    item.category.toLowerCase().includes(query) ||
+                    item.description.toLowerCase().includes(query)
+                )
+                : products;
+            renderProductCards(filtered);
+            showProductDetail(product);
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.classList.toggle('active', Number(card.dataset.productId) === product.id);
+            });
             return;
         }
 
@@ -467,7 +543,10 @@ function initProductsView() {
             const index = products.findIndex(product => product.id === id);
             if (index === -1) return;
             if (!confirm(`Eliminar "${products[index].name}" del catalogo?`)) return;
+            const deletedName = products[index].name;
             products.splice(index, 1);
+            saveProducts();
+            logActivity('Eliminacion de producto', deletedName);
             renderProductCards();
             showProductDetail(products[0]);
         }
@@ -487,6 +566,8 @@ function initProductsView() {
             description: data.get('description').toString().trim(),
         };
         products.unshift(product);
+        saveProducts();
+        logActivity('Registro de producto', `${product.name} (${product.stock} unidades)`);
         renderProductCards();
         showProductDetail(product);
         document.querySelectorAll('.product-card').forEach(card => {
@@ -524,6 +605,8 @@ function initInventoryView() {
             description: data.get('description').toString(),
         };
         products.unshift(product);
+        saveProducts();
+        logActivity('Registro de producto', `${product.name} (${product.stock} unidades)`);
         list.insertAdjacentHTML('afterbegin', `
             <article class="published-item">
                 <img src="${product.image}" alt="${product.name}">
@@ -622,6 +705,7 @@ function saveDailySales(log, message) {
     const savedReports = readStorage(REPORTS_KEY);
     savedReports.push(report);
     writeStorage(REPORTS_KEY, savedReports);
+    logActivity('Cierre de caja', `${report.cantidadVentas} ventas - ${money.format(report.total)}`, { total: report.total });
     downloadDailySales(report);
 
     sales.length = 0;
@@ -654,6 +738,52 @@ function renderAdminReports() {
     `).join('');
 }
 
+function renderAdminSales() {
+    const container = document.querySelector('[data-admin-sales]');
+    if (!container || !currentUser) return;
+
+    const history = readStorage(SALES_KEY)
+        .filter(sale => currentUser.role === 'admin' && sale.adminCode === currentUser.adminCode)
+        .sort((a, b) => b.id - a.id);
+
+    if (!history.length) {
+        container.innerHTML = '<tr><td colspan="4">Sin ventas registradas</td></tr>';
+        return;
+    }
+
+    container.innerHTML = history.map(sale => `
+        <tr>
+            <td>${sale.fecha} ${sale.hora}</td>
+            <td>${sale.trabajador}</td>
+            <td>${sale.productos.map(product => product.nombre).join(', ')}</td>
+            <td>${money.format(sale.total)}</td>
+        </tr>
+    `).join('');
+}
+
+function renderAdminActivity() {
+    const container = document.querySelector('[data-admin-activity]');
+    if (!container || !currentUser) return;
+
+    const activity = readStorage(ACTIVITY_KEY)
+        .filter(item => currentUser.role === 'admin' && item.adminCode === currentUser.adminCode)
+        .sort((a, b) => b.id - a.id);
+
+    if (!activity.length) {
+        container.innerHTML = '<tr><td colspan="4">Sin modificaciones registradas</td></tr>';
+        return;
+    }
+
+    container.innerHTML = activity.map(item => `
+        <tr>
+            <td>${item.fecha}</td>
+            <td>${item.usuario}</td>
+            <td>${item.tipo}</td>
+            <td>${item.detalle}</td>
+        </tr>
+    `).join('');
+}
+
 function initSalesView() {
     renderSalesProducts();
     updateSalesSummary();
@@ -676,6 +806,9 @@ function initSalesView() {
         const total = soldProducts.reduce((sum, product) => sum + product.price, 0);
         const time = new Date();
         sales.unshift({ total, names: soldProducts.map(product => product.name), time });
+        saveProducts();
+        saveSale(soldProducts, total, time);
+        logActivity('Venta', `${soldProducts.map(product => product.name).join(', ')} - ${money.format(total)}`, { total });
 
         showSalesMessage(message, `Venta realizada correctamente. Total: ${money.format(total)}.`);
         if (log.querySelector('.muted')) {
@@ -707,6 +840,8 @@ const views = {
         app.innerHTML = await res.text();
         await getUserList();
         renderAdminReports();
+        renderAdminSales();
+        renderAdminActivity();
     },
     products: async () => {
         const res = await fetch('./src/views/products.html');
