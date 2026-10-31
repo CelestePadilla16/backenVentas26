@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@iconify/tailwind4" { prefixes: mdi-light; };
 
+/* 🚀 Indispensable para Tailwind v4: Escanea tus archivos HTML y JS */
+@source "../views/**/*.html";
+@source "../components/**/*.js";
+
 @layer base {
   .side-nav {
     position: fixed;
