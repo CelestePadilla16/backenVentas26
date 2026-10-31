@@ -1,11 +1,6 @@
 @import "tailwindcss";
 @plugin "@iconify/tailwind4" { prefixes: mdi-light; };
 
-/* 🚀 Rutas relativas corregidas según tu estructura exacta */
-@source "../views/**/*.html";
-@source "../components/**/*.js";
-@source "../main.js";
-@source "../../index.html";
 
 @layer base {
   .side-nav {
